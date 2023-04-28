@@ -1,0 +1,24 @@
+version: '3'
+services:
+  scraping-ocr:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: kintamani/scraping-ocr
+    container_name: scraping-ocr
+    networks:
+      - scraping-ocr-network
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix
+      - ./app/img:/img/
+    environment:
+      - DISPLAY=${DISPLAY}
+    command: python3 main.py
+
+volumes:
+  img:
+    driver: local
+
+networks:
+  scraping-ocr-network:
+    driver: bridge
